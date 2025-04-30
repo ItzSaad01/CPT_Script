@@ -24,7 +24,7 @@ del /q %SPEC_FILE%
 
 echo.
 echo [INFO] Building %EXE_NAME% using PyInstaller...
-pyinstaller --onefile ^
+PyInstaller --console --onefile ^
  --add-data "%POPPLER%;%POPPLER%" ^
  --add-data "%TESSERACT%;%TESSERACT%" ^
  --name "%EXE_NAME:.exe=%" ^
