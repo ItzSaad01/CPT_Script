@@ -20,7 +20,7 @@ if %errorlevel% neq 0 (
 :: -------- INSTALL REQUIRED PACKAGES --------
 echo [INFO] Installing required packages...
 pip install --upgrade pip >nul
-pip install PyInstaller pdf2image pytesseract pillow tqdm >nul
+pip install PyInstaller pdf2image pytesseract pillow tqdm opencv-python-headless numpy >nul
 
 :: -------- BUILD EXECUTABLE --------
 echo [INFO] Building standalone EXE using PyInstaller...

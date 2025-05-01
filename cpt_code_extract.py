@@ -11,11 +11,11 @@ import numpy as np
 
 #BASE_DIR = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
 CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
-# LOCAL_POPPLER_PATH = os.path.join(CURRENT_DIR, "poppler", "Library","bin")
-# LOCAL_TESSERACT_PATH = os.path.join(CURRENT_DIR, "tesseract", "tesseract.exe")
+LOCAL_POPPLER_PATH = os.path.join(CURRENT_DIR, "poppler", "Library","bin")
+LOCAL_TESSERACT_PATH = os.path.join(CURRENT_DIR, "tesseract", "tesseract.exe")
 
-# os.environ["PATH"] += os.pathsep + LOCAL_POPPLER_PATH
-# pytesseract.pytesseract.tesseract_cmd = LOCAL_TESSERACT_PATH
+os.environ["PATH"] += os.pathsep + LOCAL_POPPLER_PATH
+pytesseract.pytesseract.tesseract_cmd = LOCAL_TESSERACT_PATH
 
 pattern = r'(?<!\d)(\b[1-9]\d{4}(?:-[A-Z0-9]{2})?\b)(?!\.\d{2})'
 
