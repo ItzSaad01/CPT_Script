@@ -25,7 +25,7 @@ pip install PyInstaller pdf2image pytesseract pillow tqdm >nul
 :: -------- BUILD EXECUTABLE --------
 echo [INFO] Building standalone EXE using PyInstaller...
 
-PyInstaller --onefile --console --name "%EXE_NAME%" ^
+python3 -m PyInstaller --onefile --console --name "%EXE_NAME%" ^
 --add-data "poppler;poppler" ^
 --add-data "tesseract;tesseract" ^
 "%SCRIPT_NAME%"
