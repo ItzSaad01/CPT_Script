@@ -7,10 +7,10 @@ from tkinter import Tk, filedialog
 from tqdm import tqdm
 
 
-BASE_DIR = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
-# CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
-LOCAL_POPPLER_PATH = os.path.join(BASE_DIR, "poppler", "Library","bin")
-LOCAL_TESSERACT_PATH = os.path.join(BASE_DIR, "tesseract", "tesseract.exe")
+#BASE_DIR = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
+CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
+LOCAL_POPPLER_PATH = os.path.join(CURRENT_DIR, "poppler", "Library","bin")
+LOCAL_TESSERACT_PATH = os.path.join(CURRENT_DIR, "tesseract", "tesseract.exe")
 
 os.environ["PATH"] += os.pathsep + LOCAL_POPPLER_PATH
 pytesseract.pytesseract.tesseract_cmd = LOCAL_TESSERACT_PATH
@@ -70,7 +70,7 @@ def extract_text_from_pdf(pdf_path):
 def save_codes_to_file(pdf_path, codes):
 
     base_name = os.path.splitext(os.path.basename(pdf_path))[0]
-    output_file = os.path.join(BASE_DIR, f"{base_name}_eob_codes.txt")
+    output_file = os.path.join(CURRENT_DIR, f"{base_name}_eob_codes.txt")
 
     print(f"[+] Saving extracted codes to {output_file}...\n")
     with open(output_file, 'w') as f:

@@ -1,43 +1,39 @@
 @echo off
 setlocal
 
-:: ---------- CONFIG ----------
-set SCRIPT_NAME=cpt_script_extract.py
-set EXE_NAME=cpt_script.exe
-set DIST_DIR=dist
-set BUILD_DIR=build
-set SPEC_FILE=%SCRIPT_NAME:.py=.spec%
+:: -------- SETTINGS --------
+set SCRIPT_NAME=cpt_code_extract.py
+set EXE_NAME=Cpt_Extractor
 
-:: Poppler and Tesseract directories relative to this folder
-set POPPLER=poppler
-set TESSERACT=tesseract
-
-echo.
-echo [INFO] Installing required Python packages...
-pip install --quiet pyinstaller pdf2image pytesseract pillow tqdm
-
-echo.
-echo [INFO] Cleaning old build files...
-rmdir /s /q %DIST_DIR%
-rmdir /s /q %BUILD_DIR%
-del /q %SPEC_FILE%
-
-echo.
-echo [INFO] Building %EXE_NAME% using PyInstaller...
-PyInstaller --console --onefile ^
- --add-data "%POPPLER%;%POPPLER%" ^
- --add-data "%TESSERACT%;%TESSERACT%" ^
- --name "%EXE_NAME:.exe=%" ^
- "%SCRIPT_NAME%"
-
-IF EXIST "%DIST_DIR%\%EXE_NAME%" (
-    echo.
-    echo [SUCCESS] Build complete! Output located at %DIST_DIR%\%EXE_NAME%
-) ELSE (
-    echo.
-    echo [ERROR] Build failed. Check for errors above.
+:: -------- CHECK PYTHON INSTALL --------
+where python >nul 2>nul
+if %errorlevel% neq 0 (
+    echo [INFO] Python not found. Installing via winget...
+    winget install --id=Python.Python.3 -e --source winget
+    if %errorlevel% neq 0 (
+        echo [ERROR] Failed to install Python. Please install it manually.
+        pause
+        exit /b
+    )
 )
 
-echo.
-pause
+:: -------- INSTALL REQUIRED PACKAGES --------
+echo [INFO] Installing required packages...
+pip install --upgrade pip >nul
+pip install PyInstaller pdf2image pytesseract pillow tqdm >nul
 
+:: -------- BUILD EXECUTABLE --------
+echo [INFO] Building standalone EXE using PyInstaller...
+
+PyInstaller --onefile --console --name "%EXE_NAME%" ^
+--add-data "poppler;poppler" ^
+--add-data "tesseract;tesseract" ^
+"%SCRIPT_NAME%"
+
+if exist "dist\%EXE_NAME%.exe" (
+    echo [✓] Build complete: dist\%EXE_NAME%.exe
+) else (
+    echo [ERROR] Build failed.
+)
+
+pause
